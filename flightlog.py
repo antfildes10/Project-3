@@ -317,6 +317,213 @@ def view_flights(flights):
     print(f"Total hours: {calculations.calculate_total_hours(flights_to_display)}")
 
 
+def select_flight(flights, action_name):
+    """Display flights and let user select one.
+
+    Args:
+        flights (list): List of flight dictionaries.
+        action_name (str): Name of action for display (e.g., "edit", "delete").
+
+    Returns:
+        tuple: (index, flight_dict) or (None, None) if cancelled.
+    """
+    if not flights:
+        print(f"\nNo flights available to {action_name}.")
+        return None, None
+
+    print("\n" + "=" * 60)
+    print(f"SELECT FLIGHT TO {action_name.upper()}".center(60))
+    print("=" * 60)
+
+    # Display numbered list of flights
+    for idx, flight in enumerate(flights, 1):
+        print(f"\n{idx}. {flight.get('date')} - "
+              f"{flight.get('aircraft_reg')} "
+              f"({flight.get('aircraft_type')}) - "
+              f"{flight.get('departure')} to {flight.get('destination')} - "
+              f"{flight.get('duration_hours')}h")
+
+    print(f"\n{len(flights) + 1}. Cancel")
+
+    while True:
+        choice = input(f"\nSelect flight number (1-{len(flights) + 1}): ").strip()
+
+        if not choice:
+            return None, None
+
+        try:
+            selection = int(choice)
+            if selection == len(flights) + 1:
+                return None, None
+            if 1 <= selection <= len(flights):
+                return selection - 1, flights[selection - 1]
+            else:
+                print(f"Error: Please enter a number between 1 and {len(flights) + 1}.")
+        except ValueError:
+            print("Error: Please enter a valid number.")
+
+
+def edit_flight(flights):
+    """Edit an existing flight with prefilled values.
+
+    Args:
+        flights (list): List of flight dictionaries.
+
+    Returns:
+        bool: True if flight was edited, False otherwise.
+    """
+    idx, flight = select_flight(flights, "edit")
+
+    if flight is None:
+        print("Operation cancelled.")
+        return False
+
+    print("\n" + "=" * 60)
+    print("EDIT FLIGHT".center(60))
+    print("=" * 60)
+    print("\nPress Enter to keep current value, or enter new value.")
+
+    # Date
+    while True:
+        current = flight.get('date', '')
+        new_date = input(f"Date [{current}]: ").strip()
+
+        if not new_date:
+            flight_date = current
+            break
+
+        is_valid, error = validation.validate_date(new_date)
+        if is_valid:
+            flight_date = new_date
+            break
+        else:
+            print(f"Error: {error}")
+
+    # Aircraft registration
+    while True:
+        current = flight.get('aircraft_reg', '')
+        new_reg = input(f"Aircraft Registration [{current}]: ").strip()
+
+        if not new_reg:
+            aircraft_reg = current
+            break
+
+        is_valid, error, reg = validation.validate_aircraft_reg(new_reg)
+        if is_valid:
+            aircraft_reg = reg
+            break
+        else:
+            print(f"Error: {error}")
+
+    # Check for duplicate (excluding current flight)
+    is_dup, dup_flight = validation.check_duplicate_flight(
+        flights,
+        flight_date,
+        aircraft_reg,
+        exclude_id=flight.get('id')
+    )
+    if is_dup:
+        print(f"\nWarning: A flight already exists for {flight_date} "
+              f"with registration {aircraft_reg}.")
+        confirm = input("Continue anyway? (yes/no): ").strip().lower()
+        if confirm not in ['yes', 'y']:
+            print("Operation cancelled.")
+            return False
+
+    # Aircraft type
+    while True:
+        current = flight.get('aircraft_type', '')
+        new_type = input(f"Aircraft Type [{current}]: ").strip()
+
+        if not new_type:
+            aircraft_type = current
+            break
+
+        is_valid, error, warning = validation.validate_aircraft_type(new_type)
+        if is_valid:
+            aircraft_type = new_type.strip().upper()
+            if warning:
+                print(warning)
+            break
+        else:
+            print(f"Error: {error}")
+
+    # Departure
+    while True:
+        current = flight.get('departure', '')
+        new_dep = input(f"Departure [{current}]: ").strip()
+
+        if not new_dep:
+            departure = current
+            break
+
+        is_valid, error, dep = validation.validate_airport_code(new_dep, "Departure")
+        if is_valid:
+            departure = dep
+            break
+        else:
+            print(f"Error: {error}")
+
+    # Destination
+    while True:
+        current = flight.get('destination', '')
+        new_dest = input(f"Destination [{current}]: ").strip()
+
+        if not new_dest:
+            destination = current
+            break
+
+        is_valid, error, dest = validation.validate_airport_code(new_dest, "Destination")
+        if is_valid:
+            destination = dest
+            break
+        else:
+            print(f"Error: {error}")
+
+    # Duration
+    while True:
+        current = flight.get('duration_hours', 0)
+        new_dur = input(f"Duration (hours) [{current}]: ").strip()
+
+        if not new_dur:
+            duration_hours = current
+            break
+
+        is_valid, error, duration = validation.validate_duration(new_dur)
+        if is_valid:
+            duration_hours = duration
+            break
+        else:
+            print(f"Error: {error}")
+
+    # Remarks
+    current = flight.get('remarks', '')
+    new_remarks = input(f"Remarks [{current}]: ").strip()
+
+    if not new_remarks:
+        remarks = current
+    else:
+        is_valid, error, remarks = validation.validate_remarks(new_remarks)
+        if not is_valid:
+            print(f"Error: {error}")
+            remarks = current
+
+    # Update flight
+    flights[idx]['date'] = flight_date
+    flights[idx]['aircraft_reg'] = aircraft_reg
+    flights[idx]['aircraft_type'] = aircraft_type
+    flights[idx]['departure'] = departure
+    flights[idx]['destination'] = destination
+    flights[idx]['duration_hours'] = duration_hours
+    flights[idx]['remarks'] = remarks
+
+    print("\n" + "-" * 60)
+    print("Flight updated successfully!")
+    print("-" * 60)
+
+    return True
+
+
 def main():
     """Main application loop."""
     print_header()
@@ -339,7 +546,9 @@ def main():
         elif choice == '2':
             view_flights(flights)
         elif choice == '3':
-            print("\n[Edit Flight feature - Coming soon]")
+            if edit_flight(flights):
+                storage.save_flights(flights)
+                print("Changes have been saved.")
         elif choice == '4':
             print("\n[Delete Flight feature - Coming soon]")
         elif choice == '5':
