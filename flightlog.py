@@ -12,7 +12,7 @@ Year: 2025
 import sys
 import uuid
 from tabulate import tabulate
-from utils import storage, validation, calculations
+from utils import storage, validation, calculations, export
 
 
 def clear_screen():
@@ -642,6 +642,65 @@ def display_summary(flights):
     print("\n" + "=" * 60)
 
 
+def export_data(flights):
+    """Export flight data to file.
+
+    Args:
+        flights (list): List of flight dictionaries to export.
+    """
+    print("\n" + "=" * 60)
+    print("EXPORT DATA".center(60))
+    print("=" * 60)
+
+    if not flights:
+        print("\nNo flights to export.")
+        print("Use option 1 from the main menu to add your first flight.")
+        return
+
+    print("\nExport Options:")
+    print("1. Export to CSV")
+    print("2. Export Summary to Text")
+    print("3. Export Both")
+    print("4. Cancel")
+
+    choice = input("\nEnter your choice (1-4): ").strip()
+
+    if choice == '1':
+        success, result = export.export_to_csv(flights)
+        if success:
+            print(f"\nSuccess! CSV file created: {result}")
+        else:
+            print(f"\nError: {result}")
+
+    elif choice == '2':
+        success, result = export.export_summary_text(flights)
+        if success:
+            print(f"\nSuccess! Summary file created: {result}")
+        else:
+            print(f"\nError: {result}")
+
+    elif choice == '3':
+        csv_success, csv_result = export.export_to_csv(flights)
+        txt_success, txt_result = export.export_summary_text(flights)
+
+        print("\n" + "-" * 60)
+        if csv_success:
+            print(f"CSV file created: {csv_result}")
+        else:
+            print(f"CSV export failed: {csv_result}")
+
+        if txt_success:
+            print(f"Summary file created: {txt_result}")
+        else:
+            print(f"Summary export failed: {txt_result}")
+        print("-" * 60)
+
+    elif choice == '4':
+        print("\nExport cancelled.")
+    else:
+        print("\nError: Invalid choice.")
+
+
 def main():
     """Main application loop."""
     print_header()
@@ -674,7 +733,7 @@ def main():
         elif choice == '5':
             display_summary(flights)
         elif choice == '6':
-            print("\n[Export Data feature - Coming soon]")
+            export_data(flights)
         elif choice == '7':
             print("\nSaving flight data...")
             storage.save_flights(flights)
