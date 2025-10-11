@@ -565,6 +565,83 @@ def delete_flight(flights):
         return False
 
 
+def display_summary(flights):
+    """Display flight statistics and analytics.
+
+    Args:
+        flights (list): List of flight dictionaries.
+    """
+    print("\n" + "=" * 60)
+    print("FLIGHT SUMMARY & ANALYTICS".center(60))
+    print("=" * 60)
+
+    if not flights:
+        print("\nNo flights recorded yet.")
+        print("Use option 1 from the main menu to add your first flight.")
+        return
+
+    # Calculate statistics
+    total_hours = calculations.calculate_total_hours(flights)
+    flight_count = calculations.get_flight_count(flights)
+    avg_duration = calculations.calculate_average_duration(flights)
+    hours_by_type = calculations.calculate_hours_by_type(flights)
+    longest = calculations.find_longest_flight(flights)
+    shortest = calculations.find_shortest_flight(flights)
+
+    # Overall statistics
+    print("\n" + "-" * 60)
+    print("OVERALL STATISTICS")
+    print("-" * 60)
+    print(f"Total Flights:        {flight_count}")
+    print(f"Total Hours:          {total_hours}")
+    print(f"Average Duration:     {avg_duration} hours")
+
+    # Hours by aircraft type
+    print("\n" + "-" * 60)
+    print("HOURS BY AIRCRAFT TYPE")
+    print("-" * 60)
+
+    type_table = []
+    for aircraft_type, hours in hours_by_type.items():
+        type_count = len(calculations.filter_by_aircraft_type(
+            flights,
+            aircraft_type
+        ))
+        type_table.append([aircraft_type, type_count, hours])
+
+    print(tabulate(
+        type_table,
+        headers=['Aircraft Type', 'Flights', 'Total Hours'],
+        tablefmt='grid'
+    ))
+
+    # Longest flight
+    if longest:
+        print("\n" + "-" * 60)
+        print("LONGEST FLIGHT")
+        print("-" * 60)
+        print(f"Date:        {longest.get('date')}")
+        print(f"Aircraft:    {longest.get('aircraft_reg')} "
+              f"({longest.get('aircraft_type')})")
+        print(f"Route:       {longest.get('departure')} -> "
+              f"{longest.get('destination')}")
+        print(f"Duration:    {longest.get('duration_hours')} hours")
+
+    # Shortest flight
+    if shortest:
+        print("\n" + "-" * 60)
+        print("SHORTEST FLIGHT")
+        print("-" * 60)
+        print(f"Date:        {shortest.get('date')}")
+        print(f"Aircraft:    {shortest.get('aircraft_reg')} "
+              f"({shortest.get('aircraft_type')})")
+        print(f"Route:       {shortest.get('departure')} -> "
+              f"{shortest.get('destination')}")
+        print(f"Duration:    {shortest.get('duration_hours')} hours")
+
+    print("\n" + "=" * 60)
+
+
 def main():
     """Main application loop."""
     print_header()
@@ -595,7 +672,7 @@ def main():
                 storage.save_flights(flights)
                 print("Changes have been saved.")
         elif choice == '5':
-            print("\n[Summary & Analytics feature - Coming soon]")
+            display_summary(flights)
         elif choice == '6':
             print("\n[Export Data feature - Coming soon]")
         elif choice == '7':
