@@ -33,8 +33,8 @@ def load_flights():
             if not isinstance(flights, list):
                 raise ValueError("Invalid data structure")
             return flights
-    except (json.JSONDecodeError, ValueError) as e:
-        print(f"Error: Corrupted flight data detected.")
+    except (json.JSONDecodeError, ValueError):
+        print("Error: Corrupted flight data detected.")
         backup_file = backup_corrupted_file()
         print(f"Backup created: {backup_file}")
         print("Creating fresh flight data file.")

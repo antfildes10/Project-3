@@ -314,7 +314,8 @@ def view_flights(flights):
     print(tabulate(table_data, headers=headers, tablefmt='grid'))
     print("=" * 60)
     print(f"\nTotal flights shown: {len(flights_to_display)}")
-    print(f"Total hours: {calculations.calculate_total_hours(flights_to_display)}")
+    total_hours = calculations.calculate_total_hours(flights_to_display)
+    print(f"Total hours: {total_hours}")
 
 
 def select_flight(flights, action_name):
@@ -346,7 +347,8 @@ def select_flight(flights, action_name):
     print(f"\n{len(flights) + 1}. Cancel")
 
     while True:
-        choice = input(f"\nSelect flight number (1-{len(flights) + 1}): ").strip()
+        prompt = f"\nSelect flight number (1-{len(flights) + 1}): "
+        choice = input(prompt).strip()
 
         if not choice:
             return None, None
@@ -358,7 +360,9 @@ def select_flight(flights, action_name):
             if 1 <= selection <= len(flights):
                 return selection - 1, flights[selection - 1]
             else:
-                print(f"Error: Please enter a number between 1 and {len(flights) + 1}.")
+                max_num = len(flights) + 1
+                print(f"Error: Please enter a number between 1 and "
+                      f"{max_num}.")
         except ValueError:
             print("Error: Please enter a valid number.")
 
@@ -457,7 +461,10 @@ def edit_flight(flights):
             departure = current
             break
 
-        is_valid, error, dep = validation.validate_airport_code(new_dep, "Departure")
+        is_valid, error, dep = validation.validate_airport_code(
+            new_dep,
+            "Departure"
+        )
         if is_valid:
             departure = dep
             break
@@ -473,7 +480,10 @@ def edit_flight(flights):
             destination = current
             break
 
-        is_valid, error, dest = validation.validate_airport_code(new_dest, "Destination")
+        is_valid, error, dest = validation.validate_airport_code(
+            new_dest,
+            "Destination"
+        )
         if is_valid:
             destination = dest
             break
@@ -554,7 +564,8 @@ def delete_flight(flights):
         print(f"Remarks:      {flight.get('remarks')}")
     print("-" * 60)
 
-    confirm = input("\nAre you sure you want to delete this flight? (yes/no): ").strip().lower()
+    prompt = "\nAre you sure you want to delete this flight? (yes/no): "
+    confirm = input(prompt).strip().lower()
 
     if confirm in ['yes', 'y']:
         flights.pop(idx)
