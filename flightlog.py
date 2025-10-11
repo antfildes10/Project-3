@@ -11,7 +11,8 @@ Year: 2025
 
 import sys
 import uuid
-from utils import storage, validation
+from tabulate import tabulate
+from utils import storage, validation, calculations
 
 
 def clear_screen():
@@ -206,6 +207,116 @@ def add_flight(flights):
     return new_flight
 
 
+def view_flights(flights):
+    """Display flights with optional filtering.
+
+    Args:
+        flights (list): List of flight dictionaries to display.
+    """
+    print("\n" + "=" * 60)
+    print("VIEW FLIGHTS".center(60))
+    print("=" * 60)
+
+    if not flights:
+        print("\nNo flights recorded yet.")
+        print("Use option 1 from the main menu to add your first flight.")
+        return
+
+    print("\nFilter Options:")
+    print("1. View All Flights")
+    print("2. Filter by Date Range")
+    print("3. Filter by Aircraft Type")
+    print("4. Back to Main Menu")
+
+    filter_choice = input("\nEnter your choice (1-4): ").strip()
+
+    flights_to_display = flights
+
+    if filter_choice == '2':
+        print("\n" + "-" * 60)
+        print("Filter by Date Range")
+        print("-" * 60)
+
+        start_date = input("Start date (YYYY-MM-DD): ").strip()
+        is_valid, error = validation.validate_date(start_date)
+        if not is_valid:
+            print(f"Error: {error}")
+            return
+
+        end_date = input("End date (YYYY-MM-DD): ").strip()
+        is_valid, error = validation.validate_date(end_date)
+        if not is_valid:
+            print(f"Error: {error}")
+            return
+
+        try:
+            flights_to_display = calculations.filter_by_date_range(
+                flights,
+                start_date,
+                end_date
+            )
+            print(f"\nShowing flights from {start_date} to {end_date}")
+        except ValueError as e:
+            print(f"Error: {str(e)}")
+            return
+
+    elif filter_choice == '3':
+        print("\n" + "-" * 60)
+        print("Filter by Aircraft Type")
+        print("-" * 60)
+
+        aircraft_type = input("Aircraft type: ").strip().upper()
+        if aircraft_type:
+            flights_to_display = calculations.filter_by_aircraft_type(
+                flights,
+                aircraft_type
+            )
+            print(f"\nShowing flights for aircraft type: {aircraft_type}")
+
+    elif filter_choice == '4':
+        return
+
+    elif filter_choice != '1':
+        print("Error: Invalid choice.")
+        return
+
+    if not flights_to_display:
+        print("\nNo flights match the specified criteria.")
+        return
+
+    # Prepare table data
+    table_data = []
+    for flight in flights_to_display:
+        table_data.append([
+            flight.get('date', ''),
+            flight.get('aircraft_reg', ''),
+            flight.get('aircraft_type', ''),
+            flight.get('departure', ''),
+            flight.get('destination', ''),
+            flight.get('duration_hours', 0),
+            flight.get('remarks', '')[:30] + '...'
+            if len(flight.get('remarks', '')) > 30
+            else flight.get('remarks', '')
+        ])
+
+    # Display table
+    headers = [
+        'Date',
+        'Registration',
+        'Type',
+        'From',
+        'To',
+        'Hours',
+        'Remarks'
+    ]
+
+    print("\n" + "=" * 60)
+    print(tabulate(table_data, headers=headers, tablefmt='grid'))
+    print("=" * 60)
+    print(f"\nTotal flights shown: {len(flights_to_display)}")
+    print(f"Total hours: {calculations.calculate_total_hours(flights_to_display)}")
+
+
 def main():
     """Main application loop."""
     print_header()
@@ -226,7 +337,7 @@ def main():
                 storage.save_flights(flights)
                 print("\nFlight has been saved to database.")
         elif choice == '2':
-            print("\n[View Flights feature - Coming soon]")
+            view_flights(flights)
         elif choice == '3':
             print("\n[Edit Flight feature - Coming soon]")
         elif choice == '4':
