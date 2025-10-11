@@ -43,5 +43,11 @@ data/*.bad.*
 *.log
 
 # Internal Documentation (Not for submission)
-*.md
-!README.md
+# Only ignore specific internal files, not all .md files
+DEVELOPMENT.md
+DISTINCTION-CHECKLIST.md
+dev-checklist.md
+CI-requirements.md
+project.md
+requirements.md
+rules.md
