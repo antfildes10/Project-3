@@ -524,6 +524,47 @@ def edit_flight(flights):
     return True
 
 
+def delete_flight(flights):
+    """Delete a flight with confirmation.
+
+    Args:
+        flights (list): List of flight dictionaries.
+
+    Returns:
+        bool: True if flight was deleted, False otherwise.
+    """
+    idx, flight = select_flight(flights, "delete")
+
+    if flight is None:
+        print("Operation cancelled.")
+        return False
+
+    print("\n" + "=" * 60)
+    print("CONFIRM DELETION".center(60))
+    print("=" * 60)
+    print("\nYou are about to delete the following flight:")
+    print("-" * 60)
+    print(f"Date:         {flight.get('date')}")
+    print(f"Aircraft:     {flight.get('aircraft_reg')} "
+          f"({flight.get('aircraft_type')})")
+    print(f"Route:        {flight.get('departure')} -> "
+          f"{flight.get('destination')}")
+    print(f"Duration:     {flight.get('duration_hours')} hours")
+    if flight.get('remarks'):
+        print(f"Remarks:      {flight.get('remarks')}")
+    print("-" * 60)
+
+    confirm = input("\nAre you sure you want to delete this flight? (yes/no): ").strip().lower()
+
+    if confirm in ['yes', 'y']:
+        flights.pop(idx)
+        print("\nFlight has been deleted successfully.")
+        return True
+    else:
+        print("\nDeletion cancelled.")
+        return False
+
+
 def main():
     """Main application loop."""
     print_header()
@@ -550,7 +591,9 @@ def main():
                 storage.save_flights(flights)
                 print("Changes have been saved.")
         elif choice == '4':
-            print("\n[Delete Flight feature - Coming soon]")
+            if delete_flight(flights):
+                storage.save_flights(flights)
+                print("Changes have been saved.")
         elif choice == '5':
             print("\n[Summary & Analytics feature - Coming soon]")
         elif choice == '6':
