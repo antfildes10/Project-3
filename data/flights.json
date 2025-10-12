@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "id": "4fe5fb26-4847-4090-a929-215f62cb59c4",
+    "date": "2025-01-01",
+    "aircraft_reg": "EI-ANT",
+    "aircraft_type": "C172",
+    "departure": "EIDW",
+    "destination": "EIDL",
+    "duration_hours": 2.0,
+    "remarks": "Fuel +15%"
+  },
+  {
+    "id": "5dfce69e-d04a-4b77-804d-27fbecba6d90",
+    "date": "2025-10-11",
+    "aircraft_reg": "EI-ANT",
+    "aircraft_type": "C172",
+    "departure": "EIDW",
+    "destination": "EGLL",
+    "duration_hours": 3.5,
+    "remarks": "N/A"
+  }
+]

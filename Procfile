@@ -1,1 +1,1 @@
-web: python3 flightlog.py
+web: node index.js
