@@ -392,17 +392,36 @@ FlightLog was developed following professional software development practices:
 - Python Best Practices: Real Python tutorials
 - Error Handling Patterns: Python's official documentation on exceptions
 
+### Development Tools
+
+- **Claude Code (Anthropic)**: Used as a development assistant for:
+  - Code troubleshooting and debugging
+  - Project planning and architecture decisions
+  - Deployment configuration and troubleshooting
+  - Code editing and refactoring suggestions
+  - All AI-assisted contributions are clearly marked with co-authorship in git commits
+
 ### Acknowledgments
 
 - Code Institute for project requirements and assessment criteria
 - Aviation community for domain knowledge regarding logbook requirements
 - Python Software Foundation for excellent documentation
+- Anthropic's Claude Code for development assistance
 
 ## Academic Integrity Statement
 
-This project is submitted as original work for the Code Institute Diploma in Full Stack Software Development (Python Essentials Portfolio Project). All code was written by the author unless explicitly credited above. Any adapted code snippets are clearly attributed with comments in the source code and referenced in this README.
+This project is submitted as original work for the Code Institute Diploma in Full Stack Software Development (Python Essentials Portfolio Project).
 
-This project has been developed with academic integrity and follows all Code Institute guidelines regarding plagiarism and proper attribution of external sources.
+**AI Assistance Disclosure**: This project was developed with the assistance of Claude Code, an AI-powered development tool by Anthropic. Claude Code was used for:
+- Troubleshooting code errors and bugs
+- Planning application architecture and structure
+- Editing and refactoring code
+- Deployment configuration and troubleshooting
+- Documentation assistance
+
+All code written with AI assistance is clearly attributed through git commit co-authorship (`Co-Authored-By: Claude <noreply@anthropic.com>`). The student directed all development decisions, understands all implemented code, and takes full responsibility for the final submission.
+
+This project has been developed with academic integrity and follows all Code Institute guidelines regarding plagiarism and proper attribution of external sources and tools.
 
 ## Project Goals and Learning Outcomes
 
