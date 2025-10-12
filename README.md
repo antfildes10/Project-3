@@ -375,67 +375,18 @@ FlightLog was developed following professional software development practices:
 
 ## Credits
 
-### Code and Implementation
+### Content
 
-- **Date Validation Technique**: Adapted from Python's official datetime documentation at [docs.python.org/3/library/datetime.html](https://docs.python.org/3/library/datetime.html)
-- **JSON File Handling with Backup**: Inspired by Python's JSON documentation and best practices for file operations
-- **UUID Generation**: Implementation based on Python's uuid module documentation
-- **Input Validation Patterns**: Aviation code validation patterns adapted from ICAO/IATA standards
-
-### External Libraries
-
-- **tabulate (v0.9.0)**: Used for formatted table display in terminal. This library was chosen because it provides professional-looking ASCII tables essential for presenting flight data clearly in a command-line interface. Documentation: [pypi.org/project/tabulate](https://pypi.org/project/tabulate/)
-
-### Learning Resources
-
+- Date validation technique adapted from Python's official datetime documentation at [docs.python.org/3/library/datetime.html](https://docs.python.org/3/library/datetime.html)
+- JSON file handling with backup inspired by Python's JSON documentation and best practices
+- UUID generation implementation based on Python's uuid module documentation
+- Input validation patterns for aviation codes adapted from ICAO/IATA standards
 - Python PEP8 Style Guide: [pep8.org](https://pep8.org/)
-- Python Best Practices: Real Python tutorials
-- Error Handling Patterns: Python's official documentation on exceptions
-
-### Development Tools
-
-- **Claude Code (Anthropic)**: Used as a development assistant for:
-  - Code troubleshooting and debugging
-  - Project planning and architecture decisions
-  - Deployment configuration and troubleshooting
-  - Code editing and refactoring suggestions
-  - All AI-assisted contributions are clearly marked with co-authorship in git commits
-
-### Acknowledgments
-
-- Code Institute for project requirements and assessment criteria
+- Error handling patterns from Python's official documentation on exceptions
+- The tabulate library (v0.9.0) was used for formatted table display - [pypi.org/project/tabulate](https://pypi.org/project/tabulate/)
+- **AI Development Assistance**: This project was developed with assistance from Claude Code by Anthropic for code troubleshooting, debugging, project planning, deployment configuration, and code editing. All AI-assisted contributions are marked with co-authorship in git commits (`Co-Authored-By: Claude <noreply@anthropic.com>`).
+- Code Institute for project template and deployment guidance
 - Aviation community for domain knowledge regarding logbook requirements
-- Python Software Foundation for excellent documentation
-- Anthropic's Claude Code for development assistance
-
-## Academic Integrity Statement
-
-This project is submitted as original work for the Code Institute Diploma in Full Stack Software Development (Python Essentials Portfolio Project).
-
-**AI Assistance Disclosure**: This project was developed with the assistance of Claude Code, an AI-powered development tool by Anthropic. Claude Code was used for:
-- Troubleshooting code errors and bugs
-- Planning application architecture and structure
-- Editing and refactoring code
-- Deployment configuration and troubleshooting
-- Documentation assistance
-
-All code written with AI assistance is clearly attributed through git commit co-authorship (`Co-Authored-By: Claude <noreply@anthropic.com>`). The student directed all development decisions, understands all implemented code, and takes full responsibility for the final submission.
-
-This project has been developed with academic integrity and follows all Code Institute guidelines regarding plagiarism and proper attribution of external sources and tools.
-
-## Project Goals and Learning Outcomes
-
-FlightLog was designed to demonstrate mastery of the following skills:
-
-- **LO1**: Implementation of algorithms for data calculations and analytics
-- **LO2**: Combining multiple algorithms for input handling, filtering, and data processing
-- **LO3**: Effective use of Python programming constructs (loops, functions, exception handling, data structures)
-- **LO4**: Clear explanation of program functionality through documentation
-- **LO5**: Identification and repair of code issues through testing
-- **LO6**: Integration of external libraries (tabulate) to enhance functionality
-- **LO7**: Implementation of a working data model with CRUD operations
-- **LO8**: Professional use of version control (Git/GitHub) with meaningful commits
-- **LO9**: Deployment preparation for cloud platforms
 
 ## Future Enhancements
 
