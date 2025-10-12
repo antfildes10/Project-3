@@ -47,7 +47,7 @@ def get_menu_choice():
     Returns:
         str: User's menu choice.
     """
-    choice = input("\nEnter your choice (1-7): ").strip()
+    choice = input("\nEnter your choice (1-7): \n").strip()
     return choice
 
 
@@ -66,7 +66,7 @@ def add_flight(flights):
 
     # Date validation
     while True:
-        date_input = input("Date (YYYY-MM-DD): ").strip()
+        date_input = input("Date (YYYY-MM-DD): \n").strip()
         if not date_input:
             print("Operation cancelled.")
             return None
@@ -80,7 +80,7 @@ def add_flight(flights):
 
     # Aircraft registration validation
     while True:
-        reg_input = input("Aircraft Registration: ").strip()
+        reg_input = input("Aircraft Registration: \n").strip()
         if not reg_input:
             print("Operation cancelled.")
             return None
@@ -101,14 +101,14 @@ def add_flight(flights):
     if is_duplicate:
         print(f"\nWarning: A flight already exists for {flight_date} "
               f"with registration {aircraft_reg}.")
-        confirm = input("Continue anyway? (yes/no): ").strip().lower()
+        confirm = input("Continue anyway? (yes/no): \n").strip().lower()
         if confirm not in ['yes', 'y']:
             print("Operation cancelled.")
             return None
 
     # Aircraft type validation
     while True:
-        type_input = input("Aircraft Type: ").strip()
+        type_input = input("Aircraft Type: \n").strip()
         if not type_input:
             print("Operation cancelled.")
             return None
@@ -126,7 +126,7 @@ def add_flight(flights):
 
     # Departure airport validation
     while True:
-        dep_input = input("Departure (ICAO/IATA): ").strip()
+        dep_input = input("Departure (ICAO/IATA): \n").strip()
         if not dep_input:
             print("Operation cancelled.")
             return None
@@ -143,7 +143,7 @@ def add_flight(flights):
 
     # Destination airport validation
     while True:
-        dest_input = input("Destination (ICAO/IATA): ").strip()
+        dest_input = input("Destination (ICAO/IATA): \n").strip()
         if not dest_input:
             print("Operation cancelled.")
             return None
@@ -160,7 +160,7 @@ def add_flight(flights):
 
     # Duration validation
     while True:
-        dur_input = input("Duration (hours): ").strip()
+        dur_input = input("Duration (hours): \n").strip()
         if not dur_input:
             print("Operation cancelled.")
             return None
@@ -173,7 +173,7 @@ def add_flight(flights):
             print(f"Error: {error_msg}")
 
     # Remarks (optional)
-    remarks_input = input("Remarks (optional): ").strip()
+    remarks_input = input("Remarks (optional): \n").strip()
     is_valid, error_msg, remarks = validation.validate_remarks(remarks_input)
     if not is_valid:
         print(f"Error: {error_msg}")
@@ -228,7 +228,7 @@ def view_flights(flights):
     print("3. Filter by Aircraft Type")
     print("4. Back to Main Menu")
 
-    filter_choice = input("\nEnter your choice (1-4): ").strip()
+    filter_choice = input("\nEnter your choice (1-4): \n").strip()
 
     flights_to_display = flights
 
@@ -237,13 +237,13 @@ def view_flights(flights):
         print("Filter by Date Range")
         print("-" * 60)
 
-        start_date = input("Start date (YYYY-MM-DD): ").strip()
+        start_date = input("Start date (YYYY-MM-DD): \n").strip()
         is_valid, error = validation.validate_date(start_date)
         if not is_valid:
             print(f"Error: {error}")
             return
 
-        end_date = input("End date (YYYY-MM-DD): ").strip()
+        end_date = input("End date (YYYY-MM-DD): \n").strip()
         is_valid, error = validation.validate_date(end_date)
         if not is_valid:
             print(f"Error: {error}")
@@ -265,7 +265,7 @@ def view_flights(flights):
         print("Filter by Aircraft Type")
         print("-" * 60)
 
-        aircraft_type = input("Aircraft type: ").strip().upper()
+        aircraft_type = input("Aircraft type: \n").strip().upper()
         if aircraft_type:
             flights_to_display = calculations.filter_by_aircraft_type(
                 flights,
@@ -347,7 +347,7 @@ def select_flight(flights, action_name):
     print(f"\n{len(flights) + 1}. Cancel")
 
     while True:
-        prompt = f"\nSelect flight number (1-{len(flights) + 1}): "
+        prompt = f"\nSelect flight number (1-{len(flights) + 1}): \n"
         choice = input(prompt).strip()
 
         if not choice:
@@ -390,7 +390,7 @@ def edit_flight(flights):
     # Date
     while True:
         current = flight.get('date', '')
-        new_date = input(f"Date [{current}]: ").strip()
+        new_date = input(f"Date [{current}]: \n").strip()
 
         if not new_date:
             flight_date = current
@@ -406,7 +406,7 @@ def edit_flight(flights):
     # Aircraft registration
     while True:
         current = flight.get('aircraft_reg', '')
-        new_reg = input(f"Aircraft Registration [{current}]: ").strip()
+        new_reg = input(f"Aircraft Registration [{current}]: \n").strip()
 
         if not new_reg:
             aircraft_reg = current
@@ -429,7 +429,7 @@ def edit_flight(flights):
     if is_dup:
         print(f"\nWarning: A flight already exists for {flight_date} "
               f"with registration {aircraft_reg}.")
-        confirm = input("Continue anyway? (yes/no): ").strip().lower()
+        confirm = input("Continue anyway? (yes/no): \n").strip().lower()
         if confirm not in ['yes', 'y']:
             print("Operation cancelled.")
             return False
@@ -437,7 +437,7 @@ def edit_flight(flights):
     # Aircraft type
     while True:
         current = flight.get('aircraft_type', '')
-        new_type = input(f"Aircraft Type [{current}]: ").strip()
+        new_type = input(f"Aircraft Type [{current}]: \n").strip()
 
         if not new_type:
             aircraft_type = current
@@ -455,7 +455,7 @@ def edit_flight(flights):
     # Departure
     while True:
         current = flight.get('departure', '')
-        new_dep = input(f"Departure [{current}]: ").strip()
+        new_dep = input(f"Departure [{current}]: \n").strip()
 
         if not new_dep:
             departure = current
@@ -474,7 +474,7 @@ def edit_flight(flights):
     # Destination
     while True:
         current = flight.get('destination', '')
-        new_dest = input(f"Destination [{current}]: ").strip()
+        new_dest = input(f"Destination [{current}]: \n").strip()
 
         if not new_dest:
             destination = current
@@ -493,7 +493,7 @@ def edit_flight(flights):
     # Duration
     while True:
         current = flight.get('duration_hours', 0)
-        new_dur = input(f"Duration (hours) [{current}]: ").strip()
+        new_dur = input(f"Duration (hours) [{current}]: \n").strip()
 
         if not new_dur:
             duration_hours = current
@@ -508,7 +508,7 @@ def edit_flight(flights):
 
     # Remarks
     current = flight.get('remarks', '')
-    new_remarks = input(f"Remarks [{current}]: ").strip()
+    new_remarks = input(f"Remarks [{current}]: \n").strip()
 
     if not new_remarks:
         remarks = current
@@ -564,7 +564,7 @@ def delete_flight(flights):
         print(f"Remarks:      {flight.get('remarks')}")
     print("-" * 60)
 
-    prompt = "\nAre you sure you want to delete this flight? (yes/no): "
+    prompt = "\nAre you sure you want to delete this flight? (yes/no): \n"
     confirm = input(prompt).strip().lower()
 
     if confirm in ['yes', 'y']:
@@ -674,7 +674,7 @@ def export_data(flights):
     print("3. Export Both")
     print("4. Cancel")
 
-    choice = input("\nEnter your choice (1-4): ").strip()
+    choice = input("\nEnter your choice (1-4): \n").strip()
 
     if choice == '1':
         success, result = export.export_to_csv(flights)
@@ -753,7 +753,7 @@ def main():
         else:
             print("\nError: Invalid choice. Please enter a number 1-7.")
 
-        input("\nPress Enter to continue...")
+        input("\nPress Enter to continue...\n")
 
 
 if __name__ == "__main__":
