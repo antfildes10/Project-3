@@ -384,7 +384,7 @@ FlightLog was developed following professional software development practices:
 - Python PEP8 Style Guide: [pep8.org](https://pep8.org/)
 - Error handling patterns from Python's official documentation on exceptions
 - The tabulate library (v0.9.0) was used for formatted table display - [pypi.org/project/tabulate](https://pypi.org/project/tabulate/)
-- **AI Development Assistance**: This project was developed with assistance from Claude Code by Anthropic for code troubleshooting, debugging, project planning, deployment configuration, and code editing. All AI-assisted contributions are marked with co-authorship in git commits (`Co-Authored-By: Claude <noreply@anthropic.com>`).
+- **AI Development Assistance**: This project was developed with assistance from Claude Code by Anthropic for code troubleshooting, debugging, project planning, deployment configuration, and code editing. All AI-assisted contributions are marked with co-authorship in git commits.
 - Code Institute for project template and deployment guidance
 - Aviation community for domain knowledge regarding logbook requirements
 
