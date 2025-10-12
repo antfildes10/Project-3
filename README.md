@@ -2,7 +2,7 @@
 
 FlightLog is a command-line application designed to help pilots efficiently manage and analyze their flight hours. The application provides a comprehensive digital logbook solution that replaces traditional paper logbooks, offering features for data entry, validation, analytics, and export capabilities. FlightLog is targeted toward private pilots, student pilots, and aviation professionals who need to maintain accurate records of their flight time for licensing requirements, personal tracking, or professional portfolio building. The application is particularly useful for pilots who want to quickly access flight statistics, filter their flight history, and export data for regulatory compliance or insurance purposes.
 
-![FlightLog CLI Screenshot](https://via.placeholder.com/800x400.png?text=FlightLog+CLI+Application)
+![FlightLog CLI Screenshot](docs/screenshots/features/main-menu.png)
 
 ## Features
 
@@ -274,22 +274,46 @@ The application is designed to run on any system with Python 3.9+ installed:
 3. Install dependencies: `pip install -r requirements.txt`
 4. Run: `python3 flightlog.py`
 
-### Cloud Deployment (Future)
+### Cloud Deployment - Heroku
 
-The application is prepared for deployment to cloud platforms such as:
+**Live Application:** [https://project-3-antfildes10-2042b5e07257.herokuapp.com/](https://project-3-antfildes10-2042b5e07257.herokuapp.com/)
 
-- **Heroku**: Using Python buildpack
-- **Render**: Free tier Python hosting
-- **Railway**: Container-based deployment
-- **Replit**: Browser-based IDE with hosting
+FlightLog is deployed on Heroku using the Code Institute Python Essentials template, which provides a web-based terminal interface for running Python CLI applications in the browser.
 
-Deployment steps will include:
-1. Creating a `Procfile` specifying the command to run
-2. Ensuring `requirements.txt` includes all dependencies
-3. Configuring environment variables if needed
-4. Deploying via platform-specific CLI or web interface
+**Deployment Steps:**
 
-The live deployment link will be added here once deployed.
+1. **Prepare Application Files**
+   - Created `run.py` as the main entry point that imports and runs `flightlog.py`
+   - Updated all `input()` statements to include `\n` for mock terminal compatibility
+   - Created `Procfile` with `web: node index.js` for Node.js server
+   - Created `runtime.txt` specifying Python 3.9.20
+   - Ensured `requirements.txt` contains all dependencies
+
+2. **Add Code Institute Template Files**
+   - Added `index.js` and `package.json` for Node.js server
+   - Added `views/layout.html` and `views/index.html` for web terminal
+   - Added `controllers/default.js` for WebSocket terminal handling
+   - These files enable the Python CLI to run in a browser-based xterm.js terminal
+
+3. **Configure Heroku**
+   - Created Heroku account at https://signup.heroku.com
+   - Created new app: `project-3-antfildes10`
+   - Added buildpacks in order: `heroku/python`, then `heroku/nodejs`
+   - Set Config Var: `PORT=8000`
+   - Connected to GitHub repository
+
+4. **Deploy**
+   - Connected Heroku app to GitHub repository
+   - Deployed from `main` branch
+   - Both Python and Node.js dependencies installed automatically
+   - Application successfully running at live URL
+
+**Technical Details:**
+- Platform: Heroku
+- Buildpacks: Python 3.9 + Node.js
+- Template: Code Institute Python Essentials Terminal
+- Runtime: Web-based terminal using xterm.js and node-pty
+- Region: United States
 
 ### GitHub Repository
 
