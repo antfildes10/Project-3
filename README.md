@@ -87,6 +87,47 @@ FlightLog is built entirely in Python 3, leveraging both standard library module
   - `sys`: System operations and graceful exit handling
   - `os`: File system operations
 
+## Design and Planning
+
+The FlightLog application was carefully designed with user experience and data integrity as primary concerns. The planning process involved creating flowcharts and diagrams to map out application logic, data flow, and validation processes.
+
+### Application Flow
+
+The main application flow was designed around a menu-driven interface that allows users to navigate between features intuitively. The flow ensures users always return to the main menu after completing any operation, and provides clear exit points at every stage.
+
+**[View Application Flow Diagram](docs/diagrams/application-flow.md)**
+
+Key design decisions:
+- Menu-driven navigation for simplicity
+- All operations return to main menu for consistency
+- Cancel operations available at any input stage
+- Confirmation required for destructive actions
+
+### Data Flow Architecture
+
+The data flow architecture separates concerns into distinct layers: input validation, storage management, data processing, and output formatting. This modular approach ensures each component has a single, well-defined responsibility.
+
+**[View Data Flow Diagram](docs/diagrams/data-flow.md)**
+
+Architecture layers:
+- **Input Layer**: User interaction via CLI
+- **Validation Layer**: Comprehensive input validation
+- **Storage Layer**: JSON persistence with backup
+- **Processing Layer**: Analytics and filtering
+- **Output Layer**: Terminal display and file export
+
+### Validation Logic
+
+Input validation was designed to prevent any invalid data from reaching the storage layer while providing clear, actionable feedback to users. The validation system implements fail-fast principles with immediate error reporting.
+
+**[View Validation Logic Diagram](docs/diagrams/validation-logic.md)**
+
+Validation features:
+- Field-by-field validation with specific error messages
+- Duplicate detection with user override option
+- Range and format checking for all inputs
+- Empty input triggers operation cancellation
+
 ## Installation and Setup
 
 ### Prerequisites
